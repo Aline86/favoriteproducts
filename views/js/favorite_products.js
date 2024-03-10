@@ -11,6 +11,10 @@
 
 document.addEventListener("DOMContentLoaded", function() {
     if(document.getElementById("favorite_product_save") != undefined){
+        prestashop.on('updatedProduct',function(event) {
+            let id_attribute = event.id_product_attribute;
+            url = replaceUrlParam(document.getElementById("favorite_product_save").value, "id_attribute", id_attribute)
+        })
         document.querySelector(".custom-favorite").addEventListener("click", function() {
             postData(document.getElementById("favorite_product_save").value);
         })
@@ -25,6 +29,18 @@ document.addEventListener("DOMContentLoaded", function() {
       
     } 
 })
+
+var replaceUrlParam = (url, paramName, paramValue) => {
+    if (paramValue == null) {
+        paramValue = '';
+    }
+    var pattern = new RegExp('\\b('+paramName+'=).*?(&|#|$)');
+    if (url.search(pattern)>=0) {
+        return url.replace(pattern,'$1' + paramValue + '$2');
+    }
+    url = url.replace(/[?#]$/,'');
+    return url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue;
+}
 var triggerPopup = (messageHTML) => {
     let divPopupElement = document.createElement("div");
     divPopupElement.setAttribute('id', 'favorite-popup1');

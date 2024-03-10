@@ -59,12 +59,6 @@ class FavoriteProductsShowlistModuleFrontController extends ModuleFrontControlle
                 $sql1->where('pac.id_product_attribute = ' . $attribute_id . ' AND al.id_lang = ' . $this->context->cookie->id_lang);
                 $favorite_product_attribute = Db::getInstance()->executeS($sql1);
                 if (empty($favorite_product_attribute) && count($favorite_product_attribute) === 0) {
-                    $sql2 = new DbQuery();
-                    $sql2->select('*');
-                    $sql2->from('attribute_lang', 'al');
-                    $sql2->where('al.id_attribute = ' . $attribute_id . ' AND al.id_lang = ' . $this->context->cookie->id_lang);
-                    $favorite_product_attribute = Db::getInstance()->executeS($sql2);
-                    
                     $params = [
                         'add' => 1,
                         'id_product' => $product_id,
