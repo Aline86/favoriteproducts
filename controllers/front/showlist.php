@@ -52,12 +52,19 @@ class FavoriteProductsShowlistModuleFrontController extends ModuleFrontControlle
                 }
                 $products[$product_id . '-' . $attribute_id ]['id_product'] = $product_id;
                 // Récupère l'attribut
-                $sql = new DbQuery();
-                $sql->select('*');
-                $sql->from('attribute_lang', 'al');
-                $sql->where('al.id_attribute = ' . $attribute_id . ' AND al.id_lang = ' . $this->context->cookie->id_lang);
-                $favorite_product_attribute = Db::getInstance()->executeS($sql);
+                $sql1 = new DbQuery();
+                $sql1->select('pac.id_product_attribute, al.name');
+                $sql1->from('attribute_lang', 'al');
+                $sql1->innerJoin('product_attribute_combination', 'pac', 'pac.id_attribute = al.id_attribute');
+                $sql1->where('pac.id_product_attribute = ' . $attribute_id . ' AND al.id_lang = ' . $this->context->cookie->id_lang);
+                $favorite_product_attribute = Db::getInstance()->executeS($sql1);
                 if (empty($favorite_product_attribute) && count($favorite_product_attribute) === 0) {
+                    $sql2 = new DbQuery();
+                    $sql2->select('*');
+                    $sql2->from('attribute_lang', 'al');
+                    $sql2->where('al.id_attribute = ' . $attribute_id . ' AND al.id_lang = ' . $this->context->cookie->id_lang);
+                    $favorite_product_attribute = Db::getInstance()->executeS($sql2);
+                    
                     $params = [
                         'add' => 1,
                         'id_product' => $product_id,
@@ -67,22 +74,23 @@ class FavoriteProductsShowlistModuleFrontController extends ModuleFrontControlle
                 }
                 else if (isset($favorite_product_attribute) && count($favorite_product_attribute) > 0) 
                 {
+              
                     // Ajoute le nom de l'attribut à l'item produit du tableau
                     foreach ($favorite_product_attribute as $irrelevant_key => $data_attribute) {
-                        $products[$product_id . '-' . $data['id_attribute']]['data_attribute'] = $data_attribute['name'];
+                        $products[$product_id . '-' . $data_attribute['id_product_attribute']]['data_attribute'] = $data_attribute['name'];
                         $params = [
                             'add' => 1,
                             'id_product' => $product_id,
-                            'id_product_attribute' => $data_attribute['id_attribute'],
+                            'id_product_attribute' => $data_attribute['id_product_attribute'],
                         ];
                         $link = $this->context->link->getPageLink('cart', true, null, $params,false);
-                        $products[$product_id . '-' . $data_attribute['id_attribute']]['id_attribute'] = $data_attribute['id_attribute'];
-                        $products[$product_id . '-' . $data_attribute['id_attribute']]['link'] = $link;
+                        $products[$product_id . '-' . $data_attribute['id_product_attribute']]['id_attribute'] = $data_attribute['id_product_attribute'];
+                        $products[$product_id . '-' . $data_attribute['id_product_attribute']]['link'] = $link;
                     }
                 }
             }
         }
-       
+
         $this->context->smarty->assign([
             'products' => $products
         ]);

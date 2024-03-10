@@ -129,7 +129,6 @@ class Favoriteproducts extends Module
             ], false, true, Db::INSERT_IGNORE);
             unset($this->context->cookie->outside_cart);
         }
-
         $id_product = (int)Tools::getValue('id_product');
         $id_product_attribute = (int)Tools::getValue('id_product_attribute');
         $this->smarty->assign([
