@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
         prestashop.on('updatedProduct',function(event) {
             let id_attribute = event.id_product_attribute;
             url = replaceUrlParam(document.getElementById("favorite_product_save").value, "id_attribute", id_attribute)
+            document.getElementById("favorite_product_save").value = url;
         })
         document.querySelector(".custom-favorite").addEventListener("click", function() {
             postData(document.getElementById("favorite_product_save").value);
@@ -56,12 +57,10 @@ var triggerPopup = (messageHTML) => {
     })
 }
 var postData = (url, data = null) => {
-    console.log("url", url)
     $.ajax({
         url: url,
         type: "POST",
         success: function (dataoutput) {
-           
             if(document.getElementById("id_user") != undefined && id_user.value === "0"){
                 divPopupElementInside = '<a class="close-favorite">&times;</a>';
                 divPopupElementInside += '<span>Pour ajouter un produit à votre liste d\envies, veuillez vous connecter via le lien suivant : </span>';
