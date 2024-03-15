@@ -59,7 +59,6 @@ class FavoriteProductsAddtocartModuleFrontController extends ModuleFrontControll
             $sql->from('favorite_products', 'fp');
             $sql->where('fp.id_user = ' . $id_customer);
             $favorite_products = Db::getInstance()->executeS($sql);
-            $params = [];
             foreach ($favorite_products as $key => $product) {
                 $cart->updateQty(
                     (int) 1,

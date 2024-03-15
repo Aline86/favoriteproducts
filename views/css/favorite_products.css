@@ -39,14 +39,6 @@
   }
  
 
-  
-  @media screen and (max-width: 700px){
-    .popup{
-      width: 70%;
-    }
-  }
-
-
 .custom-favorite{
   position: relative;
   top: 5px;
