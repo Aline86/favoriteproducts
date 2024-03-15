@@ -12,12 +12,11 @@
 if (!defined('_PS_VERSION_')) {
     exit;
 }
-//require_once __DIR__ . '/vendor/autoload.php';
-//use PrestaShop\Module\FavoriteProductsController\FavoriteProductsAjaxFrontController;
+
 /**
- * Ephoto picker and synchronization Module.s.
+ * Favorite products module
  *
- * @author Einden
+ * @author Claire-Aline Haestie
  */
 class Favoriteproducts extends Module
 {

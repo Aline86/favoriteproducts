@@ -72,13 +72,7 @@ class FavoriteProductsAddtocartModuleFrontController extends ModuleFrontControll
                     false,
                     $cart->id_currency
                 );
-                $params[] = [
-                    'add' => 1,
-                    'id_product' => $product['id_product'],
-                    'id_product_attribute' => $product['id_attribute'],
-                ];
             }
-            
             CartRule::autoAddToCart(Context::getContext());
             $link = Context::getContext()->link->getPageLink('cart', true, null, $favorite_products,false);
             Tools::redirect($link);
