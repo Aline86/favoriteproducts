@@ -5,8 +5,8 @@
  * With the purchase or the installation of the software in your application
  * you accept the licence agreement.
  * You must not modify, adapt or create derivative works of this source code
- *  @author    Einden
- *  @copyright 2023 Einden
+ *  @author    Claire-Aline Haestie
+ *  @copyright 2024 Claire-Aline Haestie
  *  @license   LICENSE.txt
  */
 header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
